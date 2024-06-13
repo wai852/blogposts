@@ -1,8 +1,10 @@
 ---
 title: "Understanding Data Revalidating in Next.js"
-date: "July 1, 2023"
+date: "2024-06-13"
 tags: ["next.js", "Data Revalidating", "ISR"]
 ---
+
+##Data revalidation
 
 Data revalidation is a crucial aspect of web development, especially when using Next.js. It allows us to keep our static pages up-to-date with the most recent data changes. This process helps to improve the user experience by providing users with the latest data without requiring a full page rebuild.
 
@@ -12,4 +14,35 @@ By setting a `revalidate` value, we instruct Next.js to attempt a page regenerat
 
 If the data changes are not frequent, we can set a higher `revalidate` value to reduce the regeneration frequency. Conversely, if the data changes are frequent, we can set a lower `revalidate` value to ensure that the static pages are always up-to-date.
 
-In conclusion, data revalidation is a powerful feature in Next.js that provides a balance between optimization and data freshness. It allows us to serve static pages that can be updated incrementally, providing an excellent user experience.
+data revalidation is a powerful feature in Next.js that provides a balance between optimization and data freshness. It allows us to serve static pages that can be updated incrementally, providing an excellent user experience.
+
+There are two primary ways to revalidate data in a Next.js application: time-based revalidation and on-demand revalidation.
+
+**Time-based revalidation** is implemented using the `revalidate` property in the `getStaticProps` function. This property defines the time in seconds after which a page regeneration can occur. For example, if `revalidate` is set to 3600, Next.js regenerates the page at most once per hour when a request comes in. Here's how you can implement this:
+
+```jsx
+export async function getStaticProps({ params }) {
+  const postContent = await getPostById(params.id);
+  return {
+    props: {
+      post: postContent,
+    },
+    revalidate: 3600, // Re-generate the post at most once per hour
+  };
+}
+```
+
+**On-demand revalidation** involves triggering a revalidation manually when needed. This can be accomplished using the `revalidatePath` function from `next/server`. You can call this function with the path of the page that you want to revalidate. This method offers more control over when the data gets revalidated. Here's an example:
+
+```jsx
+import { revalidatePath } from "next/server";
+
+export async function handler(req, res) {
+  // Trigger a revalidation for the homepage
+  await revalidatePath("/");
+
+  res.status(200).send("Homepage revalidation triggered.");
+}
+```
+
+This approach is effective when you want to revalidate a page immediately after data changes, rather than waiting for the next time-based revalidation period.
