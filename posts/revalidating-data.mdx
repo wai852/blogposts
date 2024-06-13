@@ -1,0 +1,15 @@
+---
+title: "Understanding Data Revalidating in Next.js"
+date: "July 1, 2023"
+tags: ["next.js", "Data Revalidating", "ISR"]
+---
+
+Data revalidation is a crucial aspect of web development, especially when using Next.js. It allows us to keep our static pages up-to-date with the most recent data changes. This process helps to improve the user experience by providing users with the latest data without requiring a full page rebuild.
+
+With Incremental Static Regeneration (ISR) in Next.js, we can create static pages at build time and update them at runtime as data changes. This process is known as revalidation. Next.js supports on-demand revalidation through the `revalidate` property in the `getStaticProps` function.
+
+By setting a `revalidate` value, we instruct Next.js to attempt a page regeneration at most once every specified number of seconds. If a request comes in during this time, the server will return the cached (stale) page while in the background, Next.js generates an updated page.
+
+If the data changes are not frequent, we can set a higher `revalidate` value to reduce the regeneration frequency. Conversely, if the data changes are frequent, we can set a lower `revalidate` value to ensure that the static pages are always up-to-date.
+
+In conclusion, data revalidation is a powerful feature in Next.js that provides a balance between optimization and data freshness. It allows us to serve static pages that can be updated incrementally, providing an excellent user experience.
