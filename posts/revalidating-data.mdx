@@ -43,7 +43,7 @@ import { revalidatePath } from "next/server";
 
 export async function handler(req, res) {
   // Trigger a revalidation for the homepage
-  await revalidatePath("/");
+  await revalidatePath("/"); // '/': homepage
 
   res.status(200).send("Homepage revalidation triggered.");
 }
