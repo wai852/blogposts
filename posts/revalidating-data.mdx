@@ -18,6 +18,8 @@ data revalidation is a powerful feature in Next.js that provides a balance betwe
 
 There are two primary ways to revalidate data in a Next.js application: time-based revalidation and on-demand revalidation.
 
+### Time-based revalidation
+
 **Time-based revalidation** is implemented using the `revalidate` property in the `getStaticProps` function. This property defines the time in seconds after which a page regeneration can occur. For example, if `revalidate` is set to 3600, Next.js regenerates the page at most once per hour when a request comes in. Here's how you can implement this:
 
 ```jsx
