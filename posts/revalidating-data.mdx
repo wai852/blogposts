@@ -34,6 +34,8 @@ export async function getStaticProps({ params }) {
 }
 ```
 
+### On-demand revalidation
+
 **On-demand revalidation** involves triggering a revalidation manually when needed. This can be accomplished using the `revalidatePath` function from `next/server`. You can call this function with the path of the page that you want to revalidate. This method offers more control over when the data gets revalidated. Here's an example:
 
 ```jsx
